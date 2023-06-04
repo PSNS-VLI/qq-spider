@@ -1,0 +1,37 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = "*"
+lxml = "*"
+docx = "*"
+python-docx = "*"
+beautifulsoup4 = "*"
+pymysql = "*"
+redis = "*"
+pymongo = "*"
+selenium = "*"
+scrapy-splash = "*"
+appium-python-client = "*"
+pyspider = "*"
+pyopenssl = "*"
+twisted = "*"
+scrapy = "*"
+mitmproxy = "*"
+pyexecjs = "*"
+jieba = "*"
+textrank4zh = "*"
+scipy = "*"
+cnocr = {path = "./pypi/cnocr-1.2.3-py3-none-any.whl"}
+mxnet = "*"
+xlwt = "*"
+openpyxl = "*"
+xlrd = "*"
+fuzzywuzzy = "*"
+
+[requires]
+python_version = "3.8"

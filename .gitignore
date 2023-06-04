@@ -1,0 +1,10 @@
+.idea
+.venv
+data
+spider_qcc/data
+__pycache__
+pypi
+
+settings.py
+*.log
+*.txt

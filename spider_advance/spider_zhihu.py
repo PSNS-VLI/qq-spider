@@ -1,0 +1,25 @@
+import requests
+import csv
+from pyquery import PyQuery as pq
+
+cookie=''
+with open('zhihu_cookie.txt', 'r') as f:
+    writer = csv.writer(f)
+    print(type(writer))
+
+
+# headers = {
+    # 'Cookie': '_zap=317dce97-9ac7-4ea4-91e1-a47dbc135fc8; d_c0="AJAe2X9oMBSPTh0HJScYxwhFHgneyQKfH0s=|1639626003"; _9755xjdesxxd_=32; YD00517437729195%3AWM_TID=aUS8MkAIKYFFBFBABUY%2F%2FHdSam4uKhuv; _xsrf=UoNftMJEyE3YD5Aq8FTogEHqNqJycjOj; __snaker__id=1IdHzkktZSb0Bmu1; gdxidpyhxdE=qLgjDOZ%5CGXewXoZw6Oxip3tqsloPotecKJmhiyziPiA008d77UWYrmgedqk%5CMfRrr%2BZ%2FAq1Svr2K7IelfZnkKZtHLQ6pSt6gCkujcx1YM1r2RpjiyrryUbfREoaUsfAP3IkIz9THOeb5IoSh0%2F3mP0u0GBm6jKNljzt%2BjafRJUHI%5C85d%3A1645145257918; YD00517437729195%3AWM_NI=K10%2FgcLauRIotLAk6JECyPEs%2BnHWma3fVfS4mVs1DwcGXxf1xANBWgcOG01BJxA91TcoEmKSy5w4LrLFXnwgLLgvDHe0lTbsOHpb7Wxafu%2BjpkKWWkYfwwvFVSM9jwF4Rzc%3D; YD00517437729195%3AWM_NIKE=9ca17ae2e6ffcda170e2e6eeaafb41a7a68598bc52f6868eb2d54e868f9abbf47ba58cada4ae63a287a191e52af0fea7c3b92a89ef00d0e66990bfbbb3cc65b8948f8cb542879db7b1c879e9b288b8f06bf1ba9a87d240af8abdd2c77da1999899e53bbc9f82a3d66da19189d1b44a8aa88fdab460a1b18b8eca59bbebb9d5cf7a909a988ff66d9094a997c744a7f0a4b5e1798d98c083b65dbcbfaa96aa62b4b585b8d6619bbab998f54e968d83dae97d86ec9e9be237e2a3; captcha_ticket_v2="2|1:0|10:1645144361|17:captcha_ticket_v2|704:eyJ2YWxpZGF0ZSI6IkNOMzFfdE9rT3BmS0dUTmZvcVg2QUpfNUY0dmlCTGRFc0xuUC1Kb2trUl81MjhkWUJfLkFZMXlvdGM4MDE4TGk1YVpTTlh5LUYuT2F0c2F0Zk9mU0d6aFguRGVReTkxd3NCNGtmOFdqdXhRTWNmdE5MQU52S0JsX0lWUGIxT1lJa1dvc2F1RHFRT1RfOXdNSDhsaExINnFUXy5FeFUxV1NqY3lYbVZXUS1jTnkxbXcyZzFYMThQdXZQSDZjaDRBQVpyQmlKZi5wLmh2eXlOZlhDOEl6VjJFejRkTnJ2OTJ3Lm5pNXguSEhIZnlRcVg4b25OUEs2dVctSFUyOWc0V2xBdEZKd3JDMHN5NkMudGJRZkNvbk9TRkhRLWhfRkZGWElfTThsTXNXTWZYV2t2Q2wxcnFIdHZCNlA4ZnVYUVlyTWVYT3hfWGV0NnNoR2lkY1p1X2hGU1dQS0xHX0VoQzFtNHRnRGkyenFJNkl2Zlk0VDU4OW8tVFNaUmgyQlkyZVJ2ekxlZVZCZEZsTS43alguZXFZc213UVJDZWpkSWVydzRnU04xazc1UV9oX0I0TGY1U05ybXFFZzcwZy41a0U4LS5oRVowdnVKd3RKZVJXTjUtNnRQMnBybHIydlZCOGYtNkdzTXRaWEdHOGguZmE5cFprYUprcjhlS21PVmVOMyJ9|359a15199075c3933c2368b605ba78c55501b466fc4e84e98388ec50432d5b41"; captcha_session_v2="2|1:0|10:1645144398|18:captcha_session_v2|88:S2FwU1IweVlOT3FMaFNsNU81UVZOQTNRTDNiTVZ0UWVvdUZocCtOWEl0c29KWEhJOGpBaVJZQlJueEpIZXEydg==|8491f2055735b8b900a28e8d5632a627d84e08f7937c118a8e289b1e5fc6694a"; z_c0="2|1:0|10:1645144398|4:z_c0|92:Mi4xeUpMZkRBQUFBQUFBa0I3WmYyZ3dGQ1lBQUFCZ0FsVk5UVGY4WWdCbTRMV25acUpyaVNzdWFKQmpTWkdlQ3h3aV93|20b10de7075ef5a498294b8a13f9906c0ac5f668918b532490edb578b9590e68"; q_c1=a015c7a8f0554d6ab586cb6ad34f8a75|1645413154000|1645413154000; Hm_lvt_98beee57fd2ef70ccdd5ca52b9740c49=1645405725,1645405880,1645405884,1645413157; NOT_UNREGISTER_WAITING=1; SESSIONID=U39uekP1K4Au6jmecMoKEWVLsIM1wvlNluxBnvtVqM8; JOID=VVkVBU2vLD70_0MLA67b5SNxM1gQ_B4BgZsuWjTlHn6HyShgZ44oK5f4RAwFs4hq5IPIqXwW5PbuU69VW6lgoiY=; osd=U1EQBkKpJDv38EUDBq3U4yt0MFcW9BsCjp0mXzfqGHaCyidmb4srJJHwQQ8KtYBv54zOoXkV6_DmVqxaXaFloSk=; tst=h; SUBMIT_0=1834a52a-6ff0-408e-a5a4-73687a75350c; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1645413619; KLBRSID=2177cbf908056c6654e972f5ddc96dc2|1645414460|1645413154',
+    # 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 Edg/98.0.1108.56'
+# }
+# url = 'https://www.zhihu.com/explore'
+
+# html = requests.get(url, headers=headers).text
+# doc = pq(html)
+# for index, item in enumerate(doc('a.css-1nd7dqm').items()):
+    # question = item.text()
+    # file = open('explore.txt', 'a', encoding='utf-8')
+    # file.write(str(index)+'\n'+question+'\n')
+    # file.close()
+
+
